@@ -71,7 +71,8 @@ public class ApiStatusService
             {
                 ApiName = config.Name,
                 LastChecked = DateTime.Now,
-                Status = "Offline"
+                Status = "Offline",
+                Url = config.Url
             };
 
             // Resolve server IP

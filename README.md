@@ -46,4 +46,16 @@ It allows you to configure endpoints, view their online/offline status, and see 
     }
   ]
   ```
+- You can edit this file directly or use the web UI.
+
+## Files to Remove Before Publishing
+
+- **`bin/` and `obj/` folders:**  
+  These contain build artifacts and should not be committed.
+
+- **`ApiConfigs.json` (if it contains sensitive or private endpoints):**  
+  Remove or replace with a sample file (e.g., `ApiConfigs.sample.json`) before making the repo public.
+
+- **`appsettings.Development.json` and any other environment-specific config files**  
+  if they contain secrets or sensitive data.
 

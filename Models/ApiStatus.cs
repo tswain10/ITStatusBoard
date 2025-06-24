@@ -7,5 +7,5 @@ public class ApiStatus
     public DateTime LastChecked { get; set; }
     public string ErrorMessage { get; set; }
     public string ServerIp { get; set; }
-    public string Url { get; set; } // Add this property
+    public string Url { get; set; }
 }
