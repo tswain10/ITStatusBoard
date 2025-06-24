@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "bq8tad/RUZTwM9Mq/q2aaTlUb+i3+I4m9knT+sZ/fzU=",
+  "Source": "ITStatusBoard",
+  "BasePath": "_content/ITStatusBoard",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ITStatusBoard\\wwwroot",
+      "Source": "ITStatusBoard",
+      "ContentRoot": "D:\\_Repos\\ITStatusBoard\\ITStatusBoard\\wwwroot\\",
+      "BasePath": "_content/ITStatusBoard",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\_Repos\\ITStatusBoard\\ITStatusBoard\\wwwroot\\css\\site.css",
+      "SourceId": "ITStatusBoard",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\_Repos\\ITStatusBoard\\ITStatusBoard\\wwwroot\\",
+      "BasePath": "_content/ITStatusBoard",
+      "RelativePath": "css/site.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "D:\\_Repos\\ITStatusBoard\\ITStatusBoard\\wwwroot\\js\\site.js",
+      "SourceId": "ITStatusBoard",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\_Repos\\ITStatusBoard\\ITStatusBoard\\wwwroot\\",
+      "BasePath": "_content/ITStatusBoard",
+      "RelativePath": "js/site.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\site.js"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+@model List<ApiStatus>
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_Layout";
+}
+<h2 class="mb-4">Dashboard</h2>
+<table class="table table-striped table-bordered align-middle shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Last Checked</th>
+            <th>Server IP</th>
+            <th>URL</th>
+            <th>Error</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var api in Model)
+    {
+        <tr>
+            <td>@api.ApiName</td>
+            <td>
+                <span class="badge bg-@(api.Status == "Online" ? "success" : "danger")">
+                    @api.Status
+                </span>
+            </td>
+            <td>@api.LastChecked.ToString("g")</td>
+            <td>@api.ServerIp</td>
+            <td>
+                <a href="@api.ApiName" target="_blank">@api.ApiName</a>
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(api.ErrorMessage))
+                {
+                    <span class="text-danger">@api.ErrorMessage</span>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

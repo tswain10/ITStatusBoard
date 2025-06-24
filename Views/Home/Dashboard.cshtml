@@ -1,0 +1,24 @@
+@model IEnumerable<MyAspNetCoreApp.Models.ApiStatus>
+
+<h1>API Status Dashboard</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>API Name</th>
+            <th>Status</th>
+            <th>Last Checked</th>
+            <th>Error Message</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var api in Model)
+        {
+            <tr>
+                <td>@api.ApiName</td>
+                <td>@api.Status</td>
+                <td>@api.LastChecked</td>
+                <td>@api.ErrorMessage</td>
+            </tr>
+        }
+    </tbody>
+</table>
