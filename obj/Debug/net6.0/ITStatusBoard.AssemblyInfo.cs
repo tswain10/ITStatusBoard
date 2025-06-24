@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ITStatusBoard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56db60f6b4d3ddf0d4bdbe593db74004ca4cfeb1")]
 [assembly: System.Reflection.AssemblyProductAttribute("ITStatusBoard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ITStatusBoard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
