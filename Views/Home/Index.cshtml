@@ -1,19 +1,64 @@
+@model List<(string Name, string Url, string Type, double UptimePercent, double DowntimePercent, double AvgResponseTimeMs)>
 @{
     Layout = "_Layout";
+    ViewData["Title"] = "Dashboard";
+    var summaries = ViewBag.Summaries as List<(string Type, int Total, int Online, int Offline, double AvgUptime, double AvgDowntime, double AvgResponseTimeMs)>;
+    var websites = ViewBag.Websites as List<ApiStatus>;
+    var apis = ViewBag.Apis as List<ApiStatus>;
+    var servers = ViewBag.Servers as List<ApiStatus>;
+    var statsByUrl = ViewBag.StatsByUrl as Dictionary<string, (double UptimePercent, double DowntimePercent, double AvgResponseTimeMs)>;
 }
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to My ASP.NET Core Application</h1>
-        <p>This is the home page.</p>
+<div class="container">
+    <h1 class="mb-4">IT Status Dashboard</h1>
+    <div class="row mb-4">
+        @if (summaries != null)
+        {
+            foreach (var s in summaries)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center">
+                        <div class="card-header bg-primary text-white">@s.Type</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Total: @s.Total</h5>
+                            <p class="mb-1 text-success">Online: @s.Online</p>
+                            <p class="mb-1 text-danger">Offline: @s.Offline</p>
+                            <hr />
+                            <p class="mb-1">Avg Uptime: <b>@s.AvgUptime.ToString("F1")%</b></p>
+                            <p class="mb-1">Avg Downtime: <b>@s.AvgDowntime.ToString("F1")%</b></p>
+                            <p class="mb-0">Avg Response: <b>@s.AvgResponseTimeMs.ToString("F0") ms</b></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
     </div>
-</body>
-</html>
+    <ul class="nav nav-tabs mb-3" id="dashboardTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="websites-tab" data-bs-toggle="tab" data-bs-target="#websites" type="button" role="tab" aria-controls="websites" aria-selected="true">Websites</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="apis-tab" data-bs-toggle="tab" data-bs-target="#apis" type="button" role="tab" aria-controls="apis" aria-selected="false">APIs</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="servers-tab" data-bs-toggle="tab" data-bs-target="#servers" type="button" role="tab" aria-controls="servers" aria-selected="false">Servers</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="dashboardTabsContent">
+        <div class="tab-pane fade show active" id="websites" role="tabpanel" aria-labelledby="websites-tab">
+            @await Html.PartialAsync("_StatusTable", (websites, statsByUrl))
+        </div>
+        <div class="tab-pane fade" id="apis" role="tabpanel" aria-labelledby="apis-tab">
+            @await Html.PartialAsync("_StatusTable", (apis, statsByUrl))
+        </div>
+        <div class="tab-pane fade" id="servers" role="tabpanel" aria-labelledby="servers-tab">
+            @await Html.PartialAsync("_StatusTable", (servers, statsByUrl))
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script>
+    setTimeout(function() {
+        window.location.reload();
+    }, 60000); // 1 minute in milliseconds
+</script>
+}

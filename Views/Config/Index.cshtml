@@ -2,30 +2,140 @@
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Configure Checks";
+    var websites = Model.Where(x => x.Type == "Website").ToList();
+    var apis = Model.Where(x => x.Type == "API").ToList();
+    var servers = Model.Where(x => x.Type == "Server").ToList();
 }
 <h2>Configure API/Website Checks</h2>
 <form action="/Config/Add" method="post" class="row g-3 mb-4">
     @Html.AntiForgeryToken()
-    <div class="col-md-5">
+    <div class="col-md-4">
         <input type="text" name="Name" class="form-control" placeholder="Name" required />
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
         <input type="url" name="Url" class="form-control" placeholder="URL (http/https)" required />
+    </div>
+    <div class="col-md-2">
+        <select name="Type" class="form-select" required>
+            <option value="">Type...</option>
+            <option value="Website">Website</option>
+            <option value="API">API</option>
+            <option value="Server">Server</option>
+        </select>
     </div>
     <div class="col-md-2">
         <button type="submit" class="btn btn-primary w-100">Add</button>
     </div>
 </form>
-<ul class="list-group">
-@foreach(var config in Model)
-{
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span>@config.Name - @config.Url</span>
-        <form action="/Config/Remove" method="post" class="mb-0 ms-2">
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="url" value="@config.Url" />
-            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-        </form>
-    </li>
+
+<div class="mb-4">
+    <h4>Websites</h4>
+    <ul class="list-group sortable-list" id="websites-list">
+    @foreach(var config in websites)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center" draggable="true" data-url="@config.Url">
+            <form action="/Config/Edit" method="post" class="d-flex flex-grow-1 align-items-center mb-0" style="gap: 0.5rem;">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="OriginalUrl" value="@config.Url" />
+                <input type="text" name="Name" class="form-control form-control-sm w-auto" value="@config.Name" required />
+                <input type="url" name="Url" class="form-control form-control-sm w-auto" value="@config.Url" required />
+                <select name="Type" class="form-select form-select-sm w-auto" required>
+                    <option value="Website" @(config.Type=="Website" ? "selected" : "")>Website</option>
+                    <option value="API" @(config.Type=="API" ? "selected" : "")>API</option>
+                    <option value="Server" @(config.Type=="Server" ? "selected" : "")>Server</option>
+                </select>
+                <button type="submit" class="btn btn-success btn-sm">Save</button>
+            </form>
+            <form action="/Config/Remove" method="post" class="mb-0 ms-2">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="url" value="@config.Url" />
+                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+            </form>
+        </li>
+    }
+    </ul>
+</div>
+<div class="mb-4">
+    <h4>APIs</h4>
+    <ul class="list-group sortable-list" id="apis-list">
+    @foreach(var config in apis)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center" draggable="true" data-url="@config.Url">
+            <form action="/Config/Edit" method="post" class="d-flex flex-grow-1 align-items-center mb-0" style="gap: 0.5rem;">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="OriginalUrl" value="@config.Url" />
+                <input type="text" name="Name" class="form-control form-control-sm w-auto" value="@config.Name" required />
+                <input type="url" name="Url" class="form-control form-control-sm w-auto" value="@config.Url" required />
+                <select name="Type" class="form-select form-select-sm w-auto" required>
+                    <option value="Website" @(config.Type=="Website" ? "selected" : "")>Website</option>
+                    <option value="API" @(config.Type=="API" ? "selected" : "")>API</option>
+                    <option value="Server" @(config.Type=="Server" ? "selected" : "")>Server</option>
+                </select>
+                <button type="submit" class="btn btn-success btn-sm">Save</button>
+            </form>
+            <form action="/Config/Remove" method="post" class="mb-0 ms-2">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="url" value="@config.Url" />
+                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+            </form>
+        </li>
+    }
+    </ul>
+</div>
+<div class="mb-4">
+    <h4>Servers</h4>
+    <ul class="list-group sortable-list" id="servers-list">
+    @foreach(var config in servers)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center" draggable="true" data-url="@config.Url">
+            <form action="/Config/Edit" method="post" class="d-flex flex-grow-1 align-items-center mb-0" style="gap: 0.5rem;">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="OriginalUrl" value="@config.Url" />
+                <input type="text" name="Name" class="form-control form-control-sm w-auto" value="@config.Name" required />
+                <input type="url" name="Url" class="form-control form-control-sm w-auto" value="@config.Url" required />
+                <select name="Type" class="form-select form-select-sm w-auto" required>
+                    <option value="Website" @(config.Type=="Website" ? "selected" : "")>Website</option>
+                    <option value="API" @(config.Type=="API" ? "selected" : "")>API</option>
+                    <option value="Server" @(config.Type=="Server" ? "selected" : "")>Server</option>
+                </select>
+                <button type="submit" class="btn btn-success btn-sm">Save</button>
+            </form>
+            <form action="/Config/Remove" method="post" class="mb-0 ms-2">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="url" value="@config.Url" />
+                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+            </form>
+        </li>
+    }
+    </ul>
+</div>
+
+@section Scripts {
+<script>
+    // Simple HTML5 drag-and-drop for each sortable list
+    document.querySelectorAll('.sortable-list').forEach(list => {
+        let dragged;
+        list.addEventListener('dragstart', function (e) {
+            dragged = e.target;
+            e.dataTransfer.effectAllowed = 'move';
+        });
+        list.addEventListener('dragover', function (e) {
+            e.preventDefault();
+        });
+        list.addEventListener('drop', function (e) {
+            e.preventDefault();
+            if (e.target.closest('li') && dragged !== e.target.closest('li')) {
+                let dropTarget = e.target.closest('li');
+                if (dropTarget) {
+                    if (Array.from(list.children).indexOf(dragged) < Array.from(list.children).indexOf(dropTarget)) {
+                        dropTarget.after(dragged);
+                    } else {
+                        dropTarget.before(dragged);
+                    }
+                }
+            }
+            // TODO: Send new order to server via AJAX for persistence
+        });
+    });
+</script>
 }
-</ul>

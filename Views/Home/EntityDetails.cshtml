@@ -1,0 +1,36 @@
+@model List<ApiStatusHistoryEntry>
+@using System.Globalization
+@{
+    var config = ViewBag.Config;
+    var stats = ViewBag.Stats;
+    Layout = "_Layout";
+}
+<h2>Details for @config.Name</h2>
+<p><strong>Type:</strong> @config.Type<br />
+<strong>URL:</strong> @config.Url</p>
+<p>
+    <strong>Uptime:</strong> @stats.Item1.ToString("F1", CultureInfo.InvariantCulture)%<br />
+    <strong>Downtime:</strong> @stats.Item2.ToString("F1", CultureInfo.InvariantCulture)%<br />
+    <strong>Average Response Time:</strong> @stats.Item3.ToString("F0", CultureInfo.InvariantCulture) ms
+</p>
+<h4>History (last @Model.Count checks)</h4>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Timestamp</th>
+            <th>Status</th>
+            <th>Response Time (ms)</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var entry in Model.OrderByDescending(h => h.Timestamp))
+    {
+        <tr>
+            <td>@entry.Timestamp.ToString("g")</td>
+            <td>@entry.Status</td>
+            <td>@entry.ResponseTimeMs</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a href="/">&larr; Back to Summary</a>

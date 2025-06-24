@@ -2,41 +2,40 @@
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_Layout";
+    // Group items by type for tabs
+    var websites = Model.Where(x => x.Type == "Website").ToList();
+    var apis = Model.Where(x => x.Type == "API").ToList();
+    var servers = Model.Where(x => x.Type == "Server").ToList();
 }
 <h2 class="mb-4">Dashboard</h2>
-<table class="table table-striped table-bordered align-middle shadow-sm">
-    <thead class="table-dark">
-        <tr>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Last Checked</th>
-            <th>Server IP</th>
-            <th>URL</th>
-            <th>Error</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach(var api in Model)
-    {
-        <tr>
-            <td>@api.ApiName</td>
-            <td>
-                <span class="badge bg-@(api.Status == "Online" ? "success" : "danger")">
-                    @api.Status
-                </span>
-            </td>
-            <td>@api.LastChecked.ToString("g")</td>
-            <td>@api.ServerIp</td>
-            <td>
-                <a href="@api.Url" target="_blank">@api.Url</a>
-            </td>
-            <td>
-                @if (!string.IsNullOrEmpty(api.ErrorMessage))
-                {
-                    <span class="text-danger">@api.ErrorMessage</span>
-                }
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+
+<ul class="nav nav-tabs mb-3" id="dashboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="websites-tab" data-bs-toggle="tab" data-bs-target="#websites" type="button" role="tab" aria-controls="websites" aria-selected="true">Websites</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="apis-tab" data-bs-toggle="tab" data-bs-target="#apis" type="button" role="tab" aria-controls="apis" aria-selected="false">APIs</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="servers-tab" data-bs-toggle="tab" data-bs-target="#servers" type="button" role="tab" aria-controls="servers" aria-selected="false">Servers</button>
+    </li>
+</ul>
+<div class="tab-content" id="dashboardTabsContent">
+    <div class="tab-pane fade show active" id="websites" role="tabpanel" aria-labelledby="websites-tab">
+        @await Html.PartialAsync("_StatusTable", websites)
+    </div>
+    <div class="tab-pane fade" id="apis" role="tabpanel" aria-labelledby="apis-tab">
+        @await Html.PartialAsync("_StatusTable", apis)
+    </div>
+    <div class="tab-pane fade" id="servers" role="tabpanel" aria-labelledby="servers-tab">
+        @await Html.PartialAsync("_StatusTable", servers)
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    setTimeout(function() {
+        window.location.reload();
+    }, 180000); // 3 minutes in milliseconds
+</script>
+}

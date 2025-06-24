@@ -1,0 +1,36 @@
+@model (List<ApiStatus> Entities, Dictionary<string, (double UptimePercent, double DowntimePercent, double AvgResponseTimeMs)> StatsByUrl)
+@if (Model.Entities != null && Model.Entities.Count > 0)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Uptime (%)</th>
+                <th>Downtime (%)</th>
+                <th>Avg Response Time (ms)</th>
+                <th>Last Checked</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Entities)
+        {
+            var stats = Model.StatsByUrl != null && Model.StatsByUrl.ContainsKey(item.Url) ? Model.StatsByUrl[item.Url] : (0.0, 0.0, 0.0);
+            <tr>
+                <td>@item.ApiName</td>
+                <td><span class="badge @(item.Status == "Online" ? "bg-success" : "bg-danger")">@item.Status</span></td>
+                <td>@stats.Item1.ToString("F1")</td>
+                <td>@stats.Item2.ToString("F1")</td>
+                <td>@stats.Item3.ToString("F0")</td>
+                <td>@item.LastChecked.ToString("g")</td>
+                <td><a href="@Url.Action("EntityDetails", "Home", new { url = item.Url })">View</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No items to display.</p>
+}

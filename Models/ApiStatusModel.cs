@@ -1,10 +1,1 @@
-namespace MyAspNetCoreApp.Models
-{
-    public class ApiStatus
-    {
-        public string ApiName { get; set; }
-        public string Status { get; set; }
-        public DateTime LastChecked { get; set; }
-        public string ErrorMessage { get; set; }
-    }
-}
+// This file is redundant and causes duplicate class errors. The ApiStatus class is defined in ApiStatus.cs with more properties. Remove this file to resolve the duplicate definition error.
